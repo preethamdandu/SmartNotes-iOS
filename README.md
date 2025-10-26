@@ -52,15 +52,15 @@ A secure, high-performance note-taking application built with UIKit and Swift, f
 ## 📱 Screenshots
 
 ### Main Notes Interface
-![Notes Interface](screenshots/notes-main-interface.png)
+![Notes Interface](https://raw.githubusercontent.com/preethamdandu/SmartNotes-iOS/main/Simulator%20Screenshot%20-%20iPhone%2017%20-%202025-10-26%20at%2005.20.52.png)
 *Clean, modern note cards with color coding, tags, and smooth scrolling*
 
 ### Search Functionality
-![Search Interface](screenshots/search-functionality.png)
+![Search Interface](https://raw.githubusercontent.com/preethamdandu/SmartNotes-iOS/main/Simulator%20Screenshot%20-%20iPhone%2017%20-%202025-10-26%20at%2005.21.13.png)
 *Real-time search with instant filtering and intuitive results*
 
 ### Settings & Security
-![Settings Screen](screenshots/settings-screen.png)
+![Settings Screen](https://raw.githubusercontent.com/preethamdandu/SmartNotes-iOS/main/Simulator%20Screenshot%20-%20iPhone%2017%20-%202025-10-26%20at%2005.22.11.png)
 *Comprehensive settings with security options and biometric authentication*
 
 ## 🏗 Project Structure
@@ -134,7 +134,7 @@ SmartNotes/
 - Explore the search and sync features
 - Customize settings to your preference
 
-![First Launch Experience](screenshots/notes-main-interface.png)
+![First Launch Experience](https://raw.githubusercontent.com/preethamdandu/SmartNotes-iOS/main/Simulator%20Screenshot%20-%20iPhone%2017%20-%202025-10-26%20at%2005.20.52.png)
 *Your Smart Notes app ready to use with sample notes and intuitive interface*
 
 ## 🔧 Development
