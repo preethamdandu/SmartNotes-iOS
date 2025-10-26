@@ -51,23 +51,17 @@ A secure, high-performance note-taking application built with UIKit and Swift, f
 
 ## 📱 Screenshots
 
-### Notes Interface
-- Clean, modern note cards with color coding
-- Real-time search with instant filtering
-- Smooth scrolling with dynamic cell heights
-- Intuitive add/edit/delete operations
+### Main Notes Interface
+![Notes Interface](screenshots/notes-main-interface.png)
+*Clean, modern note cards with color coding, tags, and smooth scrolling*
 
-### Security Features
-- Biometric authentication setup
-- Encrypted note storage
-- Secure cloud synchronization
-- Privacy-focused design
+### Search Functionality
+![Search Interface](screenshots/search-functionality.png)
+*Real-time search with instant filtering and intuitive results*
 
-### Cross-Device Sync
-- Seamless synchronization across devices
-- Conflict resolution for simultaneous edits
-- Offline-first architecture
-- Background sync with network monitoring
+### Settings & Security
+![Settings Screen](screenshots/settings-screen.png)
+*Comprehensive settings with security options and biometric authentication*
 
 ## 🏗 Project Structure
 
@@ -139,6 +133,9 @@ SmartNotes/
 - Create your first note
 - Explore the search and sync features
 - Customize settings to your preference
+
+![First Launch Experience](screenshots/notes-main-interface.png)
+*Your Smart Notes app ready to use with sample notes and intuitive interface*
 
 ## 🔧 Development
 
