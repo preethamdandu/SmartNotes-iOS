@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Smart Notes - Cross-Device Universal App
 
 A secure, high-performance note-taking application built with UIKit and Swift, designed specifically to demonstrate expertise for Apple Software Development Engineer – Systems roles.
@@ -336,3 +337,7 @@ For questions about this project or Apple SDE Systems role preparation:
 ---
 
 **Built with ❤️ for Apple Software Development Engineer – Systems role preparation**
+=======
+# SmartNotes-iOS
+Professional iOS Notes App
+>>>>>>> fdcc08d21db5e54d744c04ac92edf1b17562bdfd
