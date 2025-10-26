@@ -6,10 +6,11 @@ class SearchViewController: UIViewController {
     private let searchController = UISearchController(searchResultsController: nil)
     private let tableView = UITableView()
     private var searchResults: [Note] = []
-    private let noteService: NoteServiceProtocol = NoteService()
+    private var allNotes: [Note] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadSampleNotes()
         setupUI()
     }
     
@@ -39,6 +40,21 @@ class SearchViewController: UIViewController {
         ])
     }
     
+    private func loadSampleNotes() {
+        allNotes = [
+            Note(title: "Welcome to Smart Notes", content: "This is your first note. Start organizing your thoughts!", tags: ["welcome", "getting-started"], color: .blue, isPinned: true),
+            Note(title: "Meeting Notes", content: "Discuss project timeline and deliverables for Q1.", tags: ["work", "meeting"], color: .green),
+            Note(title: "Shopping List", content: "Milk, eggs, bread, apples", tags: ["personal", "shopping"], color: .yellow),
+            Note(title: "Ideas", content: "New app feature ideas and improvements", tags: ["ideas", "development"], color: .purple),
+            Note(title: "Class tomorrow", content: "Remember to bring laptop and charger for iOS development class", tags: ["education", "reminder"], color: .orange),
+            Note(title: "Project Deadline", content: "Submit final project by Friday. Need to complete testing and documentation.", tags: ["work", "deadline"], color: .red),
+            Note(title: "Grocery Store", content: "Buy ingredients for dinner: pasta, tomatoes, cheese, herbs", tags: ["personal", "cooking"], color: .green),
+            Note(title: "Book Recommendations", content: "Clean Code by Robert Martin, Design Patterns by Gang of Four", tags: ["reading", "programming"], color: .blue),
+            Note(title: "Weekend Plans", content: "Visit the museum, have dinner with friends, relax at home", tags: ["personal", "weekend"], color: .purple),
+            Note(title: "Learning Goals", content: "Master SwiftUI, learn about Core Data, practice algorithms", tags: ["learning", "goals"], color: .yellow)
+        ]
+    }
+    
     private func performSearch(query: String) {
         guard !query.isEmpty else {
             searchResults = []
@@ -46,19 +62,26 @@ class SearchViewController: UIViewController {
             return
         }
         
-        Task {
-            do {
-                let results = try await noteService.searchNotes(query: query)
-                await MainActor.run {
-                    self.searchResults = results
-                    self.tableView.reloadData()
-                }
-            } catch {
-                await MainActor.run {
-                    self.showErrorAlert(message: "Search failed: \(error.localizedDescription)")
-                }
-            }
+        // Search in sample notes using the same logic as NotesViewModel
+        searchResults = allNotes.filter { note in
+            note.title.localizedCaseInsensitiveContains(query) ||
+            note.content.localizedCaseInsensitiveContains(query) ||
+            note.tags.contains { $0.localizedCaseInsensitiveContains(query) }
         }
+        
+        // Sort results by relevance (exact matches first, then partial matches)
+        searchResults.sort { first, second in
+            let firstTitleMatch = first.title.localizedCaseInsensitiveContains(query)
+            let secondTitleMatch = second.title.localizedCaseInsensitiveContains(query)
+            
+            if firstTitleMatch != secondTitleMatch {
+                return firstTitleMatch && !secondTitleMatch
+            }
+            
+            return first.updatedAt > second.updatedAt
+        }
+        
+        tableView.reloadData()
     }
     
     private func showErrorAlert(message: String) {
@@ -94,8 +117,48 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let note = searchResults[indexPath.row]
-        let detailVC = NoteDetailViewController(note: note)
-        navigationController?.pushViewController(detailVC, animated: true)
+        // For now, just show an alert with note details
+        showNoteDetails(note)
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        guard searchResults.isEmpty && !searchController.searchBar.text?.isEmpty ?? true else {
+            return nil
+        }
+        
+        let footerView = UIView()
+        footerView.backgroundColor = .clear
+        
+        let label = UILabel()
+        label.text = "No notes found matching your search"
+        label.textAlignment = .center
+        label.textColor = .secondaryLabel
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        footerView.addSubview(label)
+        NSLayoutConstraint.activate([
+            label.centerXAnchor.constraint(equalTo: footerView.centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: footerView.centerYAnchor),
+            label.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 20),
+            label.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -20)
+        ])
+        
+        return footerView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return searchResults.isEmpty && !searchController.searchBar.text?.isEmpty ?? true ? 100 : 0
+    }
+    
+    private func showNoteDetails(_ note: Note) {
+        let alert = UIAlertController(
+            title: note.title,
+            message: note.content,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
 }
 
