@@ -56,6 +56,9 @@ class SearchViewController: UIViewController {
     }
     
     private func performSearch(query: String) {
+        print("🔍 Search query: '\(query)'")
+        print("📝 Total notes available: \(allNotes.count)")
+        
         guard !query.isEmpty else {
             searchResults = []
             tableView.reloadData()
@@ -64,10 +67,18 @@ class SearchViewController: UIViewController {
         
         // Search in sample notes using the same logic as NotesViewModel
         searchResults = allNotes.filter { note in
-            note.title.localizedCaseInsensitiveContains(query) ||
-            note.content.localizedCaseInsensitiveContains(query) ||
-            note.tags.contains { $0.localizedCaseInsensitiveContains(query) }
+            let titleMatch = note.title.localizedCaseInsensitiveContains(query)
+            let contentMatch = note.content.localizedCaseInsensitiveContains(query)
+            let tagMatch = note.tags.contains { $0.localizedCaseInsensitiveContains(query) }
+            
+            if titleMatch || contentMatch || tagMatch {
+                print("✅ Found match: '\(note.title)' - Title: \(titleMatch), Content: \(contentMatch), Tag: \(tagMatch)")
+            }
+            
+            return titleMatch || contentMatch || tagMatch
         }
+        
+        print("🎯 Search results count: \(searchResults.count)")
         
         // Sort results by relevance (exact matches first, then partial matches)
         searchResults.sort { first, second in
@@ -96,6 +107,7 @@ class SearchViewController: UIViewController {
 extension SearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         let query = searchController.searchBar.text ?? ""
+        print("🔄 Search results updating with query: '\(query)'")
         performSearch(query: query)
     }
 }
