@@ -67,6 +67,10 @@ A secure, high-performance note-taking application built with UIKit and Swift, f
 <img src="https://raw.githubusercontent.com/preethamdandu/SmartNotes-iOS/main/Simulator%20Screenshot%20-%20iPhone%2017%20-%202025-10-26%20at%2005.21.13.png" alt="Search Interface" width="300"/>
 *Real-time search with instant filtering and intuitive results*
 
+### Working Search Results
+<img src="https://raw.githubusercontent.com/preethamdandu/SmartNotes-iOS/main/Simulator%20Screenshot%20-%20iPhone%2017%20-%202025-10-26%20at%2005.59.41.png" alt="Search Results" width="300"/>
+*Live search functionality showing filtered results with debug logging*
+
 ### Settings & Security
 <img src="https://raw.githubusercontent.com/preethamdandu/SmartNotes-iOS/main/Simulator%20Screenshot%20-%20iPhone%2017%20-%202025-10-26%20at%2005.22.11.png" alt="Settings Screen" width="300"/>
 *Comprehensive settings with security options and biometric authentication*
